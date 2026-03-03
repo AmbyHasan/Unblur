@@ -5,6 +5,9 @@ import z from "zod"
 import bcrypt from "bcrypt";
 import { db } from "@/lib/db";
 import { getUserByEmail } from "@/data/user";
+import { generateVerificationToken } from '../lib/tokens';
+import { sendVerificationEmail } from "@/lib/emails";
+
 
 export const signup = async(values:z.infer<typeof signupSchema>)=>{
     //now i will validate these fields again as client side validation can always be bypassed
@@ -31,6 +34,7 @@ export const signup = async(values:z.infer<typeof signupSchema>)=>{
     //creating the user in the database
 
     await db.user.create({
+      
         data:{
         name ,
         email , 
@@ -38,12 +42,12 @@ export const signup = async(values:z.infer<typeof signupSchema>)=>{
         } ,
     })
 
-    //send the verification token email
+ const verificationToken= await generateVerificationToken(email);
+
+   await sendVerificationEmail(email, verificationToken.token, name);
 
 
-
-
-    return { success : "User created successfully!"}
+    return { success : "Confirmation Email Sent!"}
    
 
 };

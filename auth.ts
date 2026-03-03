@@ -4,6 +4,7 @@ import authConfig from "./auth.config"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { db } from "./lib/db"
 import { type JWT } from "next-auth/jwt";
+import { getUserById } from "./data/user";
 
  
 export const { auth, handlers, signIn, signOut } = NextAuth({
@@ -23,6 +24,21 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 
    } ,
    callbacks:{
+
+    async signIn({user , account}){
+   //we will allow oAuth without email verification
+
+    if(account?.provider!=="credentials") return true;
+
+    if(!user) return false;
+    const existingUser= await getUserById(user.id!);
+     //preventing signin without email verification
+    if(!existingUser?.emailVerified) return false;
+
+    //add a 2FA check
+
+      return true;
+    } ,
 
      async jwt({token ,user}: {token: JWT, user: any}){ //jwt callback is called whenever a jwt token is created or updated..it is called after the authorize function in credentials provider
 

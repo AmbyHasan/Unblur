@@ -1,0 +1,23 @@
+import { Resend } from "resend";
+import VerificationEmail from "@/components/emails/VerficationEmail";
+import { render } from "@react-email/render";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+export async function sendVerificationEmail(email: string, token: string ,username:string) {
+  const verifyUrl = `${process.env.NEXT_PUBLIC_APP_URL}/verify-email?token=${token}`;
+
+
+  //in the new version of react-email render , render() function returns a promise so we need to await it to get the html string
+   const html =await render(
+     <VerificationEmail username={username} verifyUrl={verifyUrl} />
+  );
+
+  await resend.emails.send({
+     from: "Unblur <noreply@amberhasan.me>",
+    to: email,
+    subject: "Verify your email",
+    html ,
+  });
+}
+

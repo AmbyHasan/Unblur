@@ -66,7 +66,7 @@ const onSignupSubmit=(values:z.infer<typeof signupSchema>)=>{
     signup(values) //passing the form values to the server action
     .then((data)=>{
         
-        if(data.success) toast.success("User created Successfully");
+        if(data.success) toast.success(data.success);
         if(data.error) toast.error(data.error);
     })
     })
