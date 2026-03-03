@@ -2,7 +2,7 @@ import { auth } from "./auth"
 import { NextResponse } from "next/server"
 
 // Public routes that don't require authentication
-const publicRoutes = ["/", "/auth"]
+const publicRoutes = ["/", "/auth" ,"/auth/error"  , "/auth/:path*"] //add any other public routes here
 const authRoutes = [""] // "/auth"
 
 export default auth((req) => {

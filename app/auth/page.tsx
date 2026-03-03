@@ -14,6 +14,7 @@ import { signupSchema } from "../schema";
 import { signup } from "@/actions/signup";
 import { toast } from "sonner";
 import {signIn} from "next-auth/react"
+import { useSearchParams } from "next/navigation";
 
 
 export default function AuthForm() {
@@ -33,6 +34,8 @@ export default function AuthForm() {
 });
 
 
+  const searchParams=useSearchParams();
+  const urlError= searchParams.get("error")==="OAuthAccountNotLinked" ? "Email already in use with different provider":"";
   const [tab, setTab] = useState("login");
   const [isPending , startTransition]=useTransition();
 
@@ -50,8 +53,8 @@ export default function AuthForm() {
     startTransition(()=>{
     login(values) //passing the form values to the server action
     .then((data)=>{
-        setError(data.error);
-        setSuccess(data.success);
+        setError(data?.error);
+        setSuccess(data?.success);
     })
     })
 };
@@ -148,7 +151,7 @@ const onSignupSubmit=(values:z.infer<typeof signupSchema>)=>{
                   />
                   <span className="forgot">FORGOT PASSWORD?</span>
                 </div>
-                 <FormError message={error?? ""}/>
+                 <FormError message={error || urlError}/>
                  <FormSuccess message={success ?? ""}/>
                 <button className="submit-btn rounded-lg" type="submit">ACCESS ACCOUNT →</button>
 

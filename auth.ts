@@ -3,12 +3,25 @@ import NextAuth from "next-auth"
 import authConfig from "./auth.config"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { db } from "./lib/db"
-import { getToken, type JWT } from "next-auth/jwt";
-import { TURBOPACK_CLIENT_MIDDLEWARE_MANIFEST } from "next/dist/shared/lib/constants";
-
+import { type JWT } from "next-auth/jwt";
 
  
 export const { auth, handlers, signIn, signOut } = NextAuth({
+
+    pages:{
+        signIn:"/auth" ,
+        error:"/auth/error"
+    } ,
+   //when the user will use OAUTH provider in order to login that we will automatically fill the email verified field in the db cause we do not have to do any email verification for him
+   events:{ //these are triggered when any side effect happens in the authentication flow like sign in , sign out , error 
+      async linkAccount({user}){
+        await db.user.update({
+          where:{id:user.id} ,
+          data: {emailVerified: new Date()}
+        })
+      }
+
+   } ,
    callbacks:{
 
      async jwt({token ,user}: {token: JWT, user: any}){ //jwt callback is called whenever a jwt token is created or updated..it is called after the authorize function in credentials provider
