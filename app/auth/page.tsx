@@ -14,7 +14,7 @@ import { signupSchema } from "../schema";
 import { signup } from "@/actions/signup";
 import { toast } from "sonner";
 import {signIn} from "next-auth/react"
-import { useSearchParams } from "next/navigation";
+import { redirect, useSearchParams } from "next/navigation";
 
 
 export default function AuthForm() {
@@ -149,7 +149,7 @@ const onSignupSubmit=(values:z.infer<typeof signupSchema>)=>{
                       </FormItem>
                   )}
                   />
-                  <span className="forgot">FORGOT PASSWORD?</span>
+                  <span className="forgot" onClick={()=>redirect("/auth/reset-password")}>FORGOT PASSWORD?</span>
                 </div>
                  <FormError message={error || urlError}/>
                  <FormSuccess message={success ?? ""}/>
