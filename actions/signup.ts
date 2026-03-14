@@ -7,6 +7,8 @@ import { db } from "@/lib/db";
 import { getUserByEmail } from "@/data/user";
 import { generateVerificationToken } from '../lib/tokens';
 import { sendVerificationEmail } from "@/lib/emails";
+import { signupLimiter } from "@/lib/rateLimiter";
+
 
 
 export const signup = async(values:z.infer<typeof signupSchema>)=>{
@@ -21,33 +23,41 @@ export const signup = async(values:z.infer<typeof signupSchema>)=>{
     //extract the validated fields
     const {name , email , password}=validatedFields.data;
 
-    //hashign the password
+    //APPLYING RATE LIMITING
+      try {
+        await signupLimiter.consume(email);
+    } catch {
+        return { error: "Too many requests. Please wait before trying again." };
+    }
+
+    //hashing the password
     const hashedPassword= await bcrypt.hash(password , 10);
 
     //checking if the user witht this email already exists
-    const existingUser=await getUserByEmail(email);
+    try {
+        const existingUser = await getUserByEmail(email);
 
-    if(existingUser){
-        return { error : "User with this email already exists"}
+        if(existingUser){
+            return { error : "User with this email already exists"}
+        }
+
+        //creating the user in the database
+        await db.user.create({
+            data:{
+                name ,
+                email , 
+                password:hashedPassword ,
+            } ,
+        })
+
+        const verificationToken = await generateVerificationToken(email);
+        await sendVerificationEmail(email, verificationToken.token, name);
+
+        return { success : "Confirmation Email Sent!"}
+    } catch (error) {
+        console.error('Signup error:', error);
+        return { error: "Failed to create account. Please try again." };
     }
-
-    //creating the user in the database
-
-    await db.user.create({
-      
-        data:{
-        name ,
-        email , 
-        password:hashedPassword ,
-        } ,
-    })
-
- const verificationToken= await generateVerificationToken(email);
-
-   await sendVerificationEmail(email, verificationToken.token, name);
-
-
-    return { success : "Confirmation Email Sent!"}
    
 
 };

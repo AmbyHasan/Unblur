@@ -13,7 +13,12 @@ if (!connectionString) {
     throw new Error("DATABASE_URL is not set");
 }
 
-const pool = globalThis.pgPool ?? new Pool({ connectionString });
+const pool = globalThis.pgPool ?? new Pool({ 
+    connectionString,
+    ssl: {
+        rejectUnauthorized: false // Set to true in production with proper certificates
+    }
+});
 const adapter = new PrismaPg(pool);
 
 export const db = globalThis.prisma ?? new PrismaClient({ adapter });
