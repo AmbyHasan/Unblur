@@ -15,7 +15,7 @@ export async function sendVerificationEmail(email: string, token: string ,userna
   );
 
   await resend.emails.send({
-    from: "Unblur <noreply@amberhasan.me>",
+    from: "KORE <noreply@amberhasan.me>",
     to: email,
     subject: "Verify your email",
     html ,
@@ -31,7 +31,7 @@ export async function sendResetPasswordEmail(email: string, token: string  , use
   );
 
   await resend.emails.send({
-    from: "Unblur <noreply@amberhasan.me>",
+    from: "KORE <noreply@amberhasan.me>",
     to: email,
     subject: "Reset your password",
     html ,

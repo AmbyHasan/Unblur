@@ -18,7 +18,7 @@ export default function ResetPasswordEmail({ username, resetUrl }: Props) {
   return (
     <Html>
       <Head />
-      <Preview>Reset your Unblur password</Preview>
+      <Preview>Reset your KORE password</Preview>
       <Body
         style={{
           backgroundColor: "#f4f4f5",
@@ -44,7 +44,7 @@ export default function ResetPasswordEmail({ username, resetUrl }: Props) {
           </Text>
 
           <Text style={{ color: "#4b5563", fontSize: "16px" }}>
-            We received a request to reset your password for your Unblur account.
+            We received a request to reset your password for your KORE account.
             Click the button below to choose a new password.
           </Text>
 

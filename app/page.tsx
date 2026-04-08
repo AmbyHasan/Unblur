@@ -1,6 +1,5 @@
 "use client"
 import { Button } from "@/components/ui/button";
-import { Router } from "lucide-react";
 import { useState, useEffect  } from "react";
 import { useRouter } from "next/navigation";
 
@@ -24,7 +23,7 @@ const domains = [
 ];
 
 const testimonials = [
-  { text: "Resolved a Redis microservices issue in under 45 minutes. The expert's explanation was crystal clear. UNBLUR is exactly what the Indian dev ecosystem needed.", name: "Priya S.", role: "Backend Engineer", color: "#FFE500", initials: "PS" },
+  { text: "Resolved a Redis microservices issue in under 45 minutes. The expert's explanation was crystal clear. KORE is exactly what the Indian dev ecosystem needed.", name: "Priya S.", role: "Backend Engineer", color: "#FFE500", initials: "PS" },
   { text: "I've hosted 12 seminars and earned ₹80,000+ in 3 months. The platform handles everything — payments, scheduling, video. I just focus on teaching.", name: "Rajesh V.", role: "Senior Architect", color: "#FF6B35", initials: "RV" },
   { text: "The AI summary after my session was surprisingly good. Had action items, resources, and even next steps. Felt like a real course, not just a random call.", name: "Aisha P.", role: "CS Student, IIT Delhi", color: "#00D9FF", initials: "AP" },
 ];
@@ -38,23 +37,15 @@ const steps = [
   { n: "06", title: "Get Summary", desc: "AI-generated recap with action items & resources" },
 ];
 
-export default function UnblurLanding() {
+export default function KORELanding() {
   const router=useRouter();
   const [scrolled, setScrolled] = useState(false);
-  const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 });
-  const [hovering, setHovering] = useState(false);
   const [activeChip, setActiveChip] = useState<number | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
-    const onMove = (e:any) => setCursorPos({ x: e.clientX, y: e.clientY });
-    window.addEventListener("mousemove", onMove);
-    return () => window.removeEventListener("mousemove", onMove);
   }, []);
 
   useEffect(() => {
@@ -67,24 +58,15 @@ export default function UnblurLanding() {
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
-    const els = document.querySelectorAll("a, button, .btn-primary, .btn-secondary, .domain-chip, .feature-card, .price-cta");
-    const enter = () => setHovering(true);
-    const leave = () => setHovering(false);
-    els.forEach(el => { el.addEventListener("mouseenter", enter); el.addEventListener("mouseleave", leave); });
-    return () => els.forEach(el => { el.removeEventListener("mouseenter", enter); el.removeEventListener("mouseleave", leave); });
-  });
-
   const marqItems = ["Doubt Marketplace", "Expert Mentorship", "Live Seminars", "Group Discussions", "AI Summaries", "Reputation System", "Paid Sessions", "Real-time Video"];
 
   return (
     <>
       <div className="noise" />
-      <div className="cursor" style={{ left: cursorPos.x, top: cursorPos.y, ...(hovering ? { width: 40, height: 40 } : {}) }} />
 
       {/* NAV */}
       <nav className={scrolled ? "scrolled" : ""}>
-        <a href="#" className="logo">UN<span>BLUR</span></a>
+        <a href="#" className="logo">KORE</a>
         <ul>
           <li><a href="#features">Features</a></li>
           <li><a href="#how">How It Works</a></li>
@@ -305,7 +287,7 @@ export default function UnblurLanding() {
         <div className="cta-bg-text">JOIN</div>
         <div className="cta-inner">
           <div>
-            <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.7rem", letterSpacing: "3px", textTransform: "uppercase", marginBottom: "20px" }}>Ready to UNBLUR?</div>
+            <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.7rem", letterSpacing: "3px", textTransform: "uppercase", marginBottom: "20px" }}>Ready to KORE?</div>
             <div className="cta-title">STOP GOOGLING.<br/>START LEARNING.</div>
           </div>
           <div className="cta-actions">
@@ -322,7 +304,7 @@ export default function UnblurLanding() {
       <footer>
         <div className="footer-top">
           <div>
-            <a href="#" className="footer-logo">UNBLUR</a>
+            <a href="#" className="footer-logo">KORE</a>
             <p className="footer-tagline">India's premier on-demand technical mentorship platform. Connecting learners with domain experts through AI-enhanced sessions, group discussions, and seminars.</p>
           </div>
           <div>
@@ -345,7 +327,7 @@ export default function UnblurLanding() {
           </div>
         </div>
         <div className="footer-bottom">
-          <div className="footer-copy">© 2025 <span>UNBLUR</span>. Built for the curious minds of India.</div>
+          <div className="footer-copy">© 2026 <span>KORE</span>. Built for the curious minds of India.</div>
           <div className="footer-socials">
             <a href="#">in</a>
             <a href="#">tw</a>

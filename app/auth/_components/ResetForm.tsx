@@ -56,7 +56,7 @@ const ResetForm = () => {
                 >
                 <div className="form-header">
                   
-                 <div className="form-title"><img src="/unblur-logo.png" className="h-full w-7"></img>Unblur</div>
+                 <div className="form-title"><img src="/kore-logo.png" className="h-full w-7"></img>KORE</div>
                   <div className="form-subtitle text-center">RESET YOUR PASSWORD</div>
                 </div>
 

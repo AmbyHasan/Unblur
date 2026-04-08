@@ -18,7 +18,7 @@ export default function VerificationEmail({ username, verifyUrl }: Props) {
   return (
     <Html>
       <Head />
-      <Preview>Verify your Unblur account</Preview>
+      <Preview>Verify your KORE account</Preview>
       <Body style={{ backgroundColor: "#f4f4f5", padding: "40px 0" , margin:"3px" }}>
         <Container
           style={{
@@ -30,7 +30,7 @@ export default function VerificationEmail({ username, verifyUrl }: Props) {
           }}
         >
           <Heading style={{ color: "#111827", margin: "2px" }}>
-            Welcome to Unblur ✨
+            Welcome to KORE ✨
           </Heading>
 
           <Text style={{ color: "#4b5563", fontSize: "16px" }}>
